@@ -1,0 +1,153 @@
+<%= simple_nested_form_for(@feature) do |f| %>
+  <%= f.error_notification %>
+  <div class="form-inputs">
+    <ul class="nav nav-tabs" id="myTab">
+      <li class="active"><a data-target="#home" data-toggle="tab">Main</a></li>
+      <li><a data-target="#profile" data-toggle="tab">Description</a></li>
+      <li><a data-target="#messages" data-toggle="tab">Photos</a></li>
+      <li><a data-target="#floorplans" data-toggle="tab">Floor Plans</a></li>
+      <li><a data-target="#bibliographies" data-toggle="tab">Bibliographies</a></li>
+      <li><a data-target="#sketches" data-toggle="tab">Sketches</a></li>
+      <li><a data-target="#videos" data-toggle="tab">Videos</a></li>
+      <li><a data-target="#settings" data-toggle="tab">Jashemski</a></li>
+    </ul>
+    <br>
+    <div class="tab-content">
+      <div class="tab-pane active" id="home">
+        <%= f.label "Feature Sheet" %>
+         <span class="add-on"><i class="glyphicon glyphicon-question-sign text-warning" data-toggle="modal" data-target="#featureSheet" style="color:blue"></i></span><br>
+        <%= f.input :sheet, :label => false %> 
+        <%= f.label "Date" %>
+         <span class="add-on"><i class="glyphicon glyphicon-question-sign text-warning" data-toggle="modal" data-target="#date" style="color:blue"></i></span><br>          
+        <%= f.input :date, label: false %>
+        <%= f.input :recorder, collection: Recorder.current_year_array %>
+        <%= f.input :researcher, collection: Researcher.current_year_array %>
+        <%= f.input :season %>
+        <%= f.input :region, collection: (1..10) %>
+        <%= f.input :insula %>
+        <%= f.input :entrance, label: "Main Entrance" %>
+        <%= f.input :gate, collection: Gate.all_gates %>
+        <%= f.input :structure, collection: Structure.all_structures, input_html: {class: "feature_structure"} %>
+        <%= f.input :category, collection: Category.all_categories %>
+        <%= f.input :usage, collection: Usage.all_usages %>
+        <%= f.input :sheet_type, collection: [[ 'Space or Room ', 'Space or Room'],['Feature', 'Feature']], as: :radio_buttons %>
+        <%= f.input :space_number %>
+        <%= f.input :space_type, collection: SpaceType.all_space_types %>
+        <%= f.input :feature, collection: FeatureType.all_feature_types %>  
+      </div>
+      <div class="tab-pane" id="profile">   
+        <%= f.input :description, as: :wysihtml5 %>
+        <%= f.input :contiguous_relationship, as: :wysihtml5 %>   
+        <%= f.input :negative_feature %>
+        <%= f.input :minority_report %>  
+      </div>
+      <div class="tab-pane" id="messages">
+        <table id="pictures">
+        <%= f.fields_for :photos, :wrapper => false do |task_form| %>
+        <tr class="fields">
+          <td><%= task_form.file_field :picture %><% if task_form.object.picture.present? %>
+            <%= image_tag(task_form.object.picture.url(:thumb)) %>
+          <% end %></td>
+          <td><button><%= task_form.link_to_remove "Remove this photo" %></button></td>
+        </tr>
+        <% end %>
+        </table>
+         <p><button><%= f.link_to_add "Add a photo", :photos, :data => { :target => "#pictures" } %></button></p>
+        <%= f.input :photographer, collection: Photographer.current_year_array %>
+        <%= f.input :bw_roll, :label => "BW Roll/Frame" %>
+        <%= f.input :color_roll, :label => "Color Roll/Frame" %>
+        <%= f.input :digital_image %>
+      </div>
+      <div class="tab-pane" id="floorplans">
+        <table id="floorpics">
+        <%= f.fields_for :floorplans, :wrapper => false do |task_form| %>
+        <tr class="fields">
+          <td><%= task_form.file_field :picture %><% if task_form.object.picture.present? %>
+            <%= image_tag(task_form.object.picture.url(:thumb)) %>
+          <% end %></td>
+          <td><button><%= task_form.link_to_remove "Remove this floor plan" %></button></td>
+        </tr>
+        <% end %>
+        </table>
+         <p><button><%= f.link_to_add "Add a floor plan", :floorplans, :data => { :target => "#floorpics" } %></button></p>
+      </div>
+
+      <div class="tab-pane" id="sketches">
+        <table id="sketchpics">
+        <%= f.fields_for :sketches, :wrapper => false do |task_form| %>
+        <tr class="fields">
+          <td><%= task_form.file_field :picture %>
+          <% if task_form.object.picture.present? %>
+            <%= image_tag(task_form.object.picture.url(:thumb)) %>
+          <% end %></td>
+          <td><button><%= task_form.link_to_remove "Remove this floor plan" %></button></td>
+        </tr>
+        <% end %>
+        </table>
+         <p><button><%= f.link_to_add "Add a floor plan", :sketches, :data => { :target => "#sketchpics" } %></button></p>
+
+        <%= f.input :drawing, :label => "Sketch" %>
+        <%= f.input :artist, collection: Artist.current_year_array %>  
+      </div>
+      <div class="tab-pane" id="bibliographies">
+        <table id="biblio_add">
+        <%= f.fields_for :bibliographies, :wrapper => false do |task_form| %>
+        <tr class="fields">
+          <td><%= task_form.input :cited_work, collection: Citation.all.map(&:citation) %></td>
+          <td><%= task_form.input :volume %></td>
+          <td><%= task_form.input :page %></td>
+          <td><%= task_form.input :comment %></td>
+          <td><button><%= task_form.link_to_remove "Remove this bibligraphy" %></button></td>
+        </tr>
+        <% end %>
+        </table>
+         <p><button><%= f.link_to_add "Add a bibligraphy", :bibliographies, :data => { :target => "#biblio_add" } %></button></p>
+      </div>
+      <div class="tab-pane" id="videos">
+        <%= f.input :videographer, collection: Videographer.current_year_array %>
+        <%= f.input :file_number %>
+        <%= f.input :tape_number %>
+        <%= f.input :time_count %>
+        <%= f.input :video_comments %>
+      </div>
+      <div class="tab-pane" id="settings">
+        <%= f.input :jashemski_photographer %>
+        <%= f.input :jashemski_bw_roll %>
+        <%= f.input :jashemski_color_roll %>
+        <%= f.input :jashemski_digital_image %>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="form-actions">
+  <br>
+  <br>
+    <%= f.input :locked, inline_label: 'PR Finished Editing', class: 'checkbox' %>
+    <%= f.button :submit, "Save Sheet", class: "btn btn-warning" %>
+  </div>
+<% end %>
+
+
+<%= render 'modals' %>
+
+
+<script>
+var d = new Date();
+
+var month = d.getMonth()+1;
+var day = d.getDate();
+
+var output = 
+    ((''+month).length<2 ? '0' : '') + month + '/' +
+    ((''+day).length<2 ? '0' : '') + day  + '/' + d.getFullYear();
+
+if($('#feature_date').val() == ''){
+      $('#feature_date').val(output);
+   };
+
+if($('#feature_season').val() == ''){
+      $('#feature_season').val(<%= Time.now.year.to_s %>);
+   };   
+
+</script>

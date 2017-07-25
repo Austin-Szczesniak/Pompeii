@@ -1,0 +1,49 @@
+
+<h1>All Sheets<%= link_to 'Add New Feature Sheet', new_feature_path, class: "btn btn-warning" %></h1>
+<br>
+
+<h3>Search:</h3>
+<%= search_form_for @search, url: search_features_path, method: :post do |f| %>
+  <%= f.condition_fields do |c| %>
+    <%= render "condition_fields", f: c %>
+  <% end %>
+  <p><%= link_to_add_fields "Add Search Term", f, :condition %></p>
+  <div class="actions"><%= f.submit "Search" %></div>
+<% end %>
+
+<table id="" class="table table-striped table-bordered" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th>Sheet</th>
+      <th>Date</th>
+      <th>Address(R/I/E)</th>
+      <th>Researcher</th>
+      <th>Description</th>
+      <th>Edit/View</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @features.each do |feature| %>
+      <tr>
+        <td><%= feature.sheet %></td>
+        <td><%= feature.date %></td>
+        <td><%= "#{feature.region},#{feature.insula},#{feature.entrance}" %></td>
+        <td><%= feature.researcher %></td>
+        <td><%== feature.description %></td>
+        <td><%= link_to "Edit", edit_feature_path(feature), :class => "btn btn-primary" %>
+        <%= link_to "View", feature_path(feature), :class => "btn btn-success" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @features, :theme => 'twitter-bootstrap-3' %>
+
+<br>
+
+<link rel="stylesheet" href="/dataTables.bootstrap.min.css" type="text/css" media="print">
+<script src="/jquery-1.11.3.min.js"></script>
+<script src="/jquery.dataTables.min.js"></script>
+<script src="/dataTables.bootstrap.min.js"></script>

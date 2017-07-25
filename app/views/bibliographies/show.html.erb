@@ -1,0 +1,26 @@
+<div class="container">
+<br>
+<br/>
+<p class="lead">
+  <strong>Cited work:</strong>
+  <%= @bibliography.cited_work %>
+</p>
+
+<p class="lead">
+  <strong>Volume:</strong>
+  <%= @bibliography.volume %>
+</p>
+
+<p class="lead">
+  <strong>Page:</strong>
+  <%= @bibliography.page %>
+</p>
+
+<p class="lead">
+  <strong>Comments:</strong>
+  <%= @bibliography.comment %>
+</p>
+<br>
+<%= link_to 'Edit', edit_feature_bibliography_path(@feature,@bibliography), class: "btn btn-primary" %> |
+<%= link_to 'Back', feature_bibliographies_path, class: "btn btn-success" %>
+</div>

@@ -1,0 +1,219 @@
+<div class="container">
+<ul class="nav nav-tabs" id="myTab">
+      <li class="active"><a data-target="#home" data-toggle="tab">Sheet Info</a></li>
+      <li><a data-target="#photos" data-toggle="tab">Photos</a></li>
+      <li><a data-target="#floorplans" data-toggle="tab">Floor Plans</a></li>
+      <li><a data-target="#sketches" data-toggle="tab">Sketches</a></li>
+      <li><a data-target="#videos" data-toggle="tab">Videos</a></li>
+      <li><a data-target="#bibliography" data-toggle="tab">Bibliography</a></li>
+      <li><a data-target="#jashemski" data-toggle="tab">Jashemski</a></li>
+
+    </ul>
+    <br>
+    <div class="tab-content">
+      <div class="tab-pane active" id="home">
+        <p>
+          <strong>Sheet:</strong>
+          <%= @feature.sheet %>
+        </p>
+        <p>
+          <strong>Date:</strong>
+          <%= @feature.date %>
+        </p>
+        <p>
+          <strong>Recorder:</strong>
+          <%= @feature.recorder %>
+        </p>
+        <p>
+          <strong>Researcher:</strong>
+          <%= @feature.researcher %>
+        </p>
+        <p>
+          <strong>Season:</strong>
+          <%= @feature.season %>
+        </p>
+        <p>
+          <strong>Region:</strong>
+          <%= @feature.region %>
+        </p>
+        <p>
+          <strong>Insula:</strong>
+          <%= @feature.insula %>
+        </p>
+        <p>
+          <strong>Entrance:</strong>
+          <%= @feature.entrance %>
+        </p>
+        <p>
+          <strong>Gate:</strong>
+          <%= @feature.gate %>
+        </p>
+        <p>
+          <strong>Structure:</strong>
+          <%= @feature.structure %>
+        </p>
+        <p>
+          <strong>Category:</strong>
+          <%= @feature.category %>
+        </p>
+        <p>
+          <strong>Usage:</strong>
+          <%= @feature.usage %>
+        </p>
+        <p>
+          <strong>Sheet type:</strong>
+          <%= @feature.sheet_type %>
+        </p>
+
+        <p>
+          <strong>Space number:</strong>
+          <%= @feature.space_number %>
+        </p>
+        <p>
+          <strong>Space type:</strong>
+          <%= @feature.space_type %>
+        </p>
+        <p>
+          <strong>Feature:</strong>
+          <%= @feature.feature %>
+        </p>
+        <p>
+          <strong>Negative feature:</strong>
+          <%= @feature.negative_feature.present? ? "Present" : "None" %>
+        </p>
+        <p>
+          <strong>Minority report:</strong>
+          <%= @feature.minority_report.present? ? "Present" : "None" %>
+        </p>
+        <p>
+          <strong>Description:</strong>
+          <%== @feature.description %>
+        </p>
+        <p>
+          <strong>Contiguous relationship:</strong>
+          <%= @feature.contiguous_relationship %>
+        </p>
+      </div>
+      <div class="tab-pane" id="photos">
+        <% @feature.photos.map {|f| f.picture }.each do |pic| %>
+          <%= link_to image_tag(pic.url(:medium)), pic.url(:original), target: :_blank %>
+          <br>
+        <% end %>
+        <p>
+          <strong>Photographer:</strong>
+          <%= @feature.photographer %>
+        </p>
+        <p>
+          <strong>Bw roll:</strong>
+          <%= @feature.bw_roll %>
+        </p>
+        <p>
+          <strong>Color roll:</strong>
+          <%= @feature.color_roll %>
+        </p>
+        <p>
+          <strong>Digital image:</strong>
+          <%= @feature.digital_image %>
+        </p>
+        <p>
+          <strong>Photos:</strong>
+        </p>
+      </div>
+      <div class="tab-pane" id="floorplans">
+        <% @feature.floorplans.map {|f| f.picture }.each do |pic| %>
+          <%= link_to image_tag(pic.url(:medium)), pic.url(:original), target: :_blank %>
+          <br>
+        <% end %>
+      </div>
+      <div class="tab-pane" id="sketches">
+        <p>
+          <strong>Sketches:</strong>
+          <% @feature.sketches.map {|f| f.picture }.each do |pic| %>
+          <%= link_to image_tag(pic.url(:medium)), pic.url(:original), target: :_blank %>
+          <br>
+        <% end %>
+          <%= @feature.drawing %>
+        </p>
+        <p>
+          <strong>Artist:</strong>
+          <%= @feature.artist %>
+        </p>
+      </div>
+      <div class="tab-pane" id="videos">
+        <p>
+          <strong>Videographer:</strong>
+          <%= @feature.videographer %>
+        </p>
+        <p>
+          <strong>File number:</strong>
+          <%= @feature.file_number %>
+        </p>
+        <p>
+          <strong>Tape number:</strong>
+          <%= @feature.tape_number %>
+        </p>
+        <p>
+          <strong>Time count:</strong>
+          <%= @feature.time_count %>
+        </p>
+        <p>
+          <strong>Video comments:</strong>
+          <%= @feature.video_comments %>
+        </p>
+      </div>      
+      <div class="tab-pane" id="bibliography">
+        <p>
+          <strong>Bibliographies:</strong>
+          <% @feature.bibliographies.each do |biblio| %>
+          <p class="lead">
+      <strong>Cited work: <%= biblio.cited_work %></strong>
+      <strong>Volume: <%= biblio.volume %></strong>
+      <strong>Page: <%= biblio.page %></strong>
+       <strong>Comments: <%= biblio.comment %></strong>
+        </p>
+        <% end %>
+      </div>      
+      <div class="tab-pane" id="jashemski">
+        <p>
+          <strong>Jashemski photographer:</strong>
+          <%= @feature.jashemski_photographer %>
+        </p>
+
+        <p>
+          <strong>Jashemski bw roll:</strong>
+          <%= @feature.jashemski_bw_roll %>
+        </p>
+
+        <p>
+          <strong>Jashemski color roll:</strong>
+          <%= @feature.jashemski_color_roll %>
+        </p>
+
+        <p>
+          <strong>Jashemski digital image:</strong>
+          <%= @feature.jashemski_digital_image %>
+        </p>
+      </div>
+    </div>
+  <br>
+  <br>
+    <%= link_to 'Edit this Sheet', edit_feature_path(@feature), class: "btn btn-primary" %> 
+    <%= link_to 'All Feature Sheets', features_path, class: "btn btn-success" %>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

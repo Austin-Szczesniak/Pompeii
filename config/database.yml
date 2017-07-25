@@ -1,0 +1,31 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  database: pompeii_development
+  pool:     5
+  host: localhost
+  username: rails
+  password: 6uHfaJtXRi
+
+development:
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  database: pompeii_development
+  pool:     5
+  username: pompeii
+  password: password
+  template: template0
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: pompeii
+
+production:
+  <<: *default
+  database: pompeii
+  username: rails
+  password: 6uHfaJtXRi
